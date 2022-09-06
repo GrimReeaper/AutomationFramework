@@ -34,11 +34,13 @@ public class LandingPage extends AbstractComponent{
 		WebElement submit;
 		
 		
-		public void loginApplication(String email, String password)
+		public ProductCatalog loginApplication(String email, String password)
 		{
 			userEmail.sendKeys(email);
 			userPassword.sendKeys(password);
 			submit.click();
+			ProductCatalog productCatalog=new ProductCatalog(driver);
+            return productCatalog;
 		}
 		
 		public void goTo() throws AWTException

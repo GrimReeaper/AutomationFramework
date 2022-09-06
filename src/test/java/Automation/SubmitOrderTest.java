@@ -16,6 +16,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import pageObjects.CartPage;
+import pageObjects.CheckOutPage;
+import pageObjects.ConfirmationPage;
 import pageObjects.LandingPage;
 import pageObjects.ProductCatalog;
 
@@ -24,6 +27,7 @@ public class SubmitOrderTest {
 	public static void main(String[] args) throws AWTException {
 
 		String ProductName="ZARA COAT 3";
+		String CountryName="india";
 		
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver=new ChromeDriver();
@@ -32,33 +36,23 @@ public class SubmitOrderTest {
 		
 		LandingPage landingPage=new LandingPage(driver);
 		landingPage.goTo();
-		landingPage.loginApplication("shivam1@gmail.com", "Grimreaper1@");
+		ProductCatalog productCatalog=landingPage.loginApplication("shivam1@gmail.com", "Grimreaper1@");
 		
-		ProductCatalog productcatalog=new ProductCatalog(driver);
-		List<WebElement> products=productcatalog.getProductList();
-		productcatalog.addProductToCart(ProductName);
-		productcatalog.clickOnCartBtn();
-				
+		List<WebElement> products=productCatalog.getProductList();
+		productCatalog.addProductToCart(ProductName);
+		CartPage cartPage=productCatalog.goToCartPage();
 		
-		
-		List<WebElement> cartProducts=driver.findElements(By.cssSelector(".cart h3"));
-		Boolean match=cartProducts.stream().anyMatch(cartProduct->cartProduct.getText().equalsIgnoreCase(ProductName));
+		Boolean match=cartPage.verifyProductDisplay(ProductName);
 		Assert.assertTrue(match);
+		CheckOutPage checkOutPage=cartPage.goToCheckOut();
 		
-		driver.findElement(By.cssSelector(".totalRow button")).click();
+		checkOutPage.selectCountry(CountryName);
+		ConfirmationPage confirmationPage=checkOutPage.submitOrder();
 		
-		Actions a =new Actions(driver);
-		a.sendKeys(driver.findElement(By.cssSelector("[placeholder='Select Country']")),"india").build().perform();
+		 String confirmMessage=confirmationPage.getConfirmationMessage();
+		 Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
 		
-		WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".ta-results"))));
 		
-		driver.findElement(By.xpath("(//button[contains(@class,'ta-item')])[2]")).click();	
-		driver.findElement(By.cssSelector(".action__submit")).click();
-
-		
-		String confirmationMessage=driver.findElement(By.cssSelector(".hero-primary")).getText();
-		Assert.assertTrue(confirmationMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
 		driver.close();
 		
 

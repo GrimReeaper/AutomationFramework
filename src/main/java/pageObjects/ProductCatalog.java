@@ -31,8 +31,7 @@ public class ProductCatalog extends AbstractComponent{
 		@FindBy(css=".ng-animating")
 		WebElement spinner;
 		
-		@FindBy(xpath="//button[@routerlink='/dashboard/cart']")
-		WebElement cartBtn;
+
 		
 		By productsBy=By.cssSelector(".mb-3");
 		By addToCart=By.cssSelector(".card-body button:last-of-type");
@@ -59,10 +58,9 @@ public class ProductCatalog extends AbstractComponent{
 			prod.findElement(addToCart).click();
 			waitForElementToAppear(toastContainer);
 			waitForElementToDisAppear(spinner);
+		
+
 		}
 		
-		public void clickOnCartBtn()
-		{
-			cartBtn.click();
-		}
+
 }
