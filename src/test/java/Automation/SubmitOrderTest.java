@@ -37,9 +37,9 @@ public class SubmitOrderTest {
 		ProductCatalog productcatalog=new ProductCatalog(driver);
 		List<WebElement> products=productcatalog.getProductList();
 		productcatalog.addProductToCart(ProductName);
+		productcatalog.clickOnCartBtn();
 				
 		
-		driver.findElement(By.xpath("//button[@routerlink='/dashboard/cart']")).click();
 		
 		List<WebElement> cartProducts=driver.findElements(By.cssSelector(".cart h3"));
 		Boolean match=cartProducts.stream().anyMatch(cartProduct->cartProduct.getText().equalsIgnoreCase(ProductName));
