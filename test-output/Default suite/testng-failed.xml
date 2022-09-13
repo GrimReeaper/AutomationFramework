@@ -5,6 +5,9 @@
     <classes>
       <class name="Automation.SubmitOrderTest">
         <methods>
+          <include name="tearDown"/>
+          <include name="launchApplication"/>
+          <include name="OrderHistory"/>
           <include name="SubmitOrder"/>
         </methods>
       </class> <!-- Automation.SubmitOrderTest -->

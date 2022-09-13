@@ -1,33 +1,27 @@
 package Automation;
 
-import java.awt.AWTException;
-import java.io.IOException;
-import java.time.Duration;
 import java.util.List;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import Automation.TestComponents.BaseTest;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import pageObjects.CartPage;
 import pageObjects.CheckOutPage;
 import pageObjects.ConfirmationPage;
-import pageObjects.LandingPage;
+import pageObjects.OrderPage;
 import pageObjects.ProductCatalog;
 
 public class SubmitOrderTest extends BaseTest {
+	String ProductName="ZARA COAT 3";
+
      
     @Test
 	public  void SubmitOrder() throws Exception {
 
-		String ProductName="ZARA COAT 3";
 		String CountryName="india";
 		
-		LandingPage landingPage=launchApplication();
 		ProductCatalog productCatalog=landingPage.loginApplication("shivam1@gmail.com", "Grimreaper1@");
 		
 		List<WebElement> products=productCatalog.getProductList();
@@ -45,15 +39,16 @@ public class SubmitOrderTest extends BaseTest {
 		 Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
 		
 		
-		driver.close();
-		
-
-		
-
-
-
-		
-		
 	}
+    
+    
+    @Test(dependsOnMethods = {"SubmitOrder"})
+    public void OrderHistory()
+    {
+		ProductCatalog productCatalog=landingPage.loginApplication("shivam1@gmail.com", "Grimreaper1@");
+		OrderPage orderPage=productCatalog.goToOrdersPage();
+		Assert.assertTrue(orderPage.verifyOrderDisplay(ProductName));
+
+    }
 
 }

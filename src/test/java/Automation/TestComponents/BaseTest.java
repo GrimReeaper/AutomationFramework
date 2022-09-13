@@ -1,14 +1,13 @@
 package Automation.TestComponents;
 
-import java.awt.AWTException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -40,7 +39,7 @@ public class BaseTest {
 		
 	}
 		
-	    @BeforeMethod
+	    @BeforeMethod(alwaysRun=true)
 		public LandingPage launchApplication() throws IOException, Exception
 		{
 			driver=initializeDriver();
@@ -48,7 +47,12 @@ public class BaseTest {
 			landingPage.goTo();
 			return landingPage;
 		}
-
+	    
+	    @AfterMethod(alwaysRun=true)
+	    public void tearDown()
+	    {
+	    	driver.close();
+	    }
 
 }
 
