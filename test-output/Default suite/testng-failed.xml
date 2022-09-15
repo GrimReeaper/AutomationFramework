@@ -7,8 +7,8 @@
         <methods>
           <include name="tearDown"/>
           <include name="launchApplication"/>
-          <include name="OrderHistory"/>
           <include name="SubmitOrder"/>
+          <include name="OrderHistory"/>
         </methods>
       </class> <!-- Automation.SubmitOrderTest -->
     </classes>
