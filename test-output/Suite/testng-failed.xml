@@ -4,12 +4,25 @@
   <listeners>
     <listener class-name="Automation.TestComponents.Listeners"/>
   </listeners>
+  <test thread-count="5" name="Submit Order Test(failed)">
+    <classes>
+      <class name="Automation.SubmitOrderTest">
+        <methods>
+          <include name="tearDown"/>
+          <include name="launchApplication"/>
+          <include name="SubmitOrder" invocation-numbers="0 1"/>
+          <include name="OrderHistory"/>
+        </methods>
+      </class> <!-- Automation.SubmitOrderTest -->
+    </classes>
+  </test> <!-- Submit Order Test(failed) -->
   <test thread-count="5" name="Error Validations Test(failed)">
     <classes>
       <class name="Automation.ErrorValidationTest">
         <methods>
           <include name="tearDown"/>
           <include name="launchApplication"/>
+          <include name="LogInErrorValidation"/>
           <include name="ProductErrorValidation"/>
         </methods>
       </class> <!-- Automation.ErrorValidationTest -->

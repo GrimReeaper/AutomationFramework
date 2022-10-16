@@ -3,14 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="Automation.ErrorValidationTest">
+      <class name="cucumberFeatures.TestngTestRunner">
         <methods>
-          <include name="tearDown"/>
-          <include name="launchApplication"/>
-          <include name="LogInErrorValidation"/>
-          <include name="ProductErrorValidation"/>
+          <include name="setUpClass"/>
+          <include name="tearDownClass"/>
+          <include name="runScenario" invocation-numbers="0"/>
         </methods>
-      </class> <!-- Automation.ErrorValidationTest -->
+      </class> <!-- cucumberFeatures.TestngTestRunner -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
